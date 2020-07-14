@@ -1,3 +1,4 @@
+
 # Build a Dapp in 20 Minutes
 
 Here are the tools we'll use in this tutorial:
@@ -5,3 +6,8 @@ Here are the tools we'll use in this tutorial:
 2. Metamask - enables browser to talk to blockchain
 3. Ganache - local development blockchain
 4. Remix - smart contract IDE
+
+dapp_practice, testing with truffle ganache locally
+
+# links:
+- https://www.youtube.com/watch?v=KkZ6iYnSDRw
