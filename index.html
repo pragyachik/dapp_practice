@@ -50,6 +50,13 @@
       // Initialize Web3
       if (typeof web3 !== 'undefined') {
         web3 = new Web3(web3.currentProvider);
+        try { 
+            window.ethereum.enable().then(function() {
+                // User has allowed account access to DApp...
+            });
+        } catch(e) {
+            // User has denied account access to DApp...
+        }
       } else {
         web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
       }
@@ -58,10 +65,42 @@
       web3.eth.defaultAccount = web3.eth.accounts[0];
 
       // Set Contract Abi
-      var contractAbi = []; // Add Your Contract ABI here!!!
+      var contractAbi = [
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "_name",
+              "type": "string"
+            }
+          ],
+          "name": "setCandidate",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [],
+          "name": "candidateName",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        }
+      ]; // Add Your Contract ABI here!!!
 
       // Set Contract Address
-      var contractAddress = ''; // Add Your Contract address here!!!
+      var contractAddress = '0xd30432Ce9B637b02e9172E350E98647b65Dccf3b'; // Add Your Contract address here!!!
 
       // Set the Contract
       var contract = web3.eth.contract(contractAbi).at(contractAddress);
@@ -74,7 +113,12 @@
       // Change the Candidate Name
       $('form').on('submit', function(event) {
         event.preventDefault();
-        contract.setCandidate($('input').val());
+        contract.setCandidate($('input').val(),function(error , result){
+             if(!error)
+                 console.log(result);
+             else
+                 console.log(error.code)
+        });
       })
 
     </script>
